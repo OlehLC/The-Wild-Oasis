@@ -1,4 +1,9 @@
+import React from 'react';
 import styled from "styled-components";
+import GlobalStyles from "../styles/GlobalStyles.js";
+import Button from "./Button.jsx";
+import PropTypes from 'prop-types';
+import Heading from "./Heading.jsx"; // Імпортуємо PropTypes
 
 const StyledErrorFallback = styled.main`
   height: 100vh;
@@ -29,3 +34,30 @@ const Box = styled.div`
     color: var(--color-grey-500);
   }
 `;
+
+
+
+function ErrorFallBack({ error, resetErrorBoundary }) {
+  return (
+    <>
+      <GlobalStyles />
+      <StyledErrorFallback>
+        <Box>
+          <Heading as="h1">Something went wrong </Heading>
+          <p>{error.message}</p>
+          <Button size='large' onClick={resetErrorBoundary}>Try again </Button>
+        </Box>
+      </StyledErrorFallback>
+    </>
+  );
+}
+
+// Додаємо валідацію пропсів
+ErrorFallBack.propTypes = {
+  error: PropTypes.shape({
+    message: PropTypes.string.isRequired
+  }).isRequired,
+  resetErrorBoundary: PropTypes.func.isRequired
+};
+
+export default ErrorFallBack;
