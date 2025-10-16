@@ -16,6 +16,11 @@ const CommonRow = styled.div`
   column-gap: 2.4rem;
   align-items: center;
   transition: none;
+   @media (max-width: 770px) {
+   display: flex;
+      flex-direction: column;
+    gap: 2.4rem;
+  }
 `;
 
 const StyledHeader = styled(CommonRow)`
