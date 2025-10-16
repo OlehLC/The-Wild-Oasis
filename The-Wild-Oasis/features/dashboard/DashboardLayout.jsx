@@ -12,9 +12,17 @@ import TodayActivity from "../check-in-out/TodayActivity.jsx";
 
 const StyledDashboardLayout = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr ; 
   grid-template-rows: auto 34rem auto;
-  gap: 2.4rem;`;
+  gap: 2.4rem;
+
+
+  @media (max-width: 1000px) {
+   display: flex;
+      flex-direction: column;
+    gap: 2.4rem;
+  }
+`;
 
 function DashboardLayout() {
     const {bookings,isLoading:isLoading1}=useRecentBookings();

@@ -11,7 +11,6 @@ import {useNavigate} from "react-router-dom";
 import { useMoveBack } from "../../hooks/useMoveBack";
 import {useBooking} from "./useBooking.js";
 import Spinner from "../../ui/Spinner.jsx";
-import Menus from "../../ui/Menus.jsx";
 import {HiArrowUpOnSquare} from "react-icons/hi2";
 import {useCheckout} from "../check-in-out/useCheckout.js";
 import Modal from "../../ui/Modal.jsx";

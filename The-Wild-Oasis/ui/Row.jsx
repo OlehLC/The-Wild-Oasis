@@ -6,6 +6,11 @@ display :flex;
     ${(props)=>props.type==='horizontal'&& css`
     justify-content: space-between;
         align-items: center;
+         @media (max-width: 630px) {
+   display: flex;
+      flex-direction: column;
+    gap: 2.4rem;
+  }
     `}
     ${(props)=>props.type==='vertical'&& css`
     flex-direction: column;

@@ -78,8 +78,8 @@ function Pagination({ count }) {
     setSearchParams(searchParams);
   }
 
-  const start = (currentPage - 1) * PAGE_SIZE + 1;
-  const end = Math.min(currentPage * PAGE_SIZE, count);
+  // const start = (currentPage - 1) * PAGE_SIZE + 1;
+  // const end = Math.min(currentPage * PAGE_SIZE, count);
 if(pageCount <=1) return null;
   return (
     <StyledPagination>

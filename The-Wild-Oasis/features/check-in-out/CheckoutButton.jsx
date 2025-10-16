@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types"; // Import PropTypes
 import Button from "../../ui/Button";
 import { useCheckout } from "./useCheckout.js";

@@ -1,7 +1,6 @@
-import React from "react";
 import styled from "styled-components";
-import PropTypes from "prop-types"; // Import PropTypes
-import { Link } from "react-router-dom"; // Ensure Link is imported
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 import Tag from "../../ui/Tag.jsx";
 import { Flag } from "../../ui/Flag.jsx";
 import Button from "../../ui/Button.jsx";
@@ -21,19 +20,19 @@ const StyledTodayItem = styled.li`
   }
 `;
 
-const Guest = styled.div`
+const Guests = styled.div`
   font-weight: 500;
 `;
 
 function TodayItem({ activity }) {
-  const { id, status, guests, numNights } = activity;
+  const { id, status, Guest, numNights } = activity;
 
   return (
     <StyledTodayItem>
       {status === "unconfirmed" && <Tag type="green">Arriving</Tag>}
       {status === "checked-in" && <Tag type="blue">Departing</Tag>}
-      <Flag src={guests.countryFlag} alt={`Flag of ${guests.country}`} />
-      <Guest>{guests.fullName}</Guest>
+      <Flag src={Guest.countryFlag} alt={`Flag of ${Guest.country}`} />
+      <Guests>{Guest.fullName}</Guests>
       <div>{numNights} nights</div>
       {status === "unconfirmed" && (
         <Button size="small" variation="primary" as={Link} to={`/checkin/${id}`}>
@@ -50,11 +49,11 @@ TodayItem.propTypes = {
   activity: PropTypes.shape({
     id: PropTypes.string.isRequired,
     status: PropTypes.oneOf(["unconfirmed", "checked-in"]).isRequired,
-    guests: PropTypes.shape({
-      fullName: PropTypes.string.isRequired,
-      countryFlag: PropTypes.string.isRequired,
-      country: PropTypes.string.isRequired,
-    }).isRequired,
+    Guest: PropTypes.shape({
+      fullName: PropTypes.string,
+      countryFlag: PropTypes.string,
+      country: PropTypes.string,
+    }),
     numNights: PropTypes.number.isRequired,
   }).isRequired,
 };

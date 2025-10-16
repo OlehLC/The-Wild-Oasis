@@ -14,7 +14,7 @@ import { useEffect, useState } from "react";
 import Checkbox from "../../ui/Checkbox.jsx";
 import { formatCurrency } from "../../utils/helpers.js";
 import { useCheckin } from "./useCheckin.js";
-import {useSettings} from "../settings/useSeetings.js";
+import { useSettings } from "../settings/useSeetings.js";
 
 const Box = styled.div`
   background-color: var(--color-grey-0);
@@ -25,17 +25,21 @@ const Box = styled.div`
 
 function CheckinBooking() {
   const [confirmPaid, setConfirmPaid] = useState(false);
-  const [addBreakfest, setAddBreakfest] = useState(false);
+  const [addBreakfast, setAddBreakfast] = useState(false);
   const { booking, isLoading } = useBooking();
-  const{setting,isLoading:isLoadingSettings} = useSettings();
+  const { isLoading: isLoadingSettings } = useSettings();
   const moveBack = useMoveBack();
-  const { checkin, isCheckingIn } = useCheckin(); // Використовуємо correct name for checkin
+  const { checkin, isCheckingIn } = useCheckin();
 
   useEffect(() => {
-    setConfirmPaid(booking?.isPaid ?? false);
+    if (booking) {
+      setConfirmPaid(booking?.isPaid ?? false);
+    }
   }, [booking]);
 
-  if (isLoading|| isLoadingSettings) return <Spinner />;
+  // Якщо дані ще завантажуються, показуємо Spinner
+  if (isLoading || isLoadingSettings) return <Spinner />;
+
   const {
     id: bookingId,
     Guest = {},
@@ -44,24 +48,35 @@ function CheckinBooking() {
     hasBreakfast,
     numNights,
   } = booking;
-const   optionalBreakfastPrice= 15*numNights*numGuests;
 
-  function handleCheckin() {
-    if (confirmPaid) {
-      if(addBreakfest){
-checkin({bookingId,breakfast:{
-  hasBreakfast:true,
-    extrasPrice:optionalBreakfastPrice,
-    totalPrice:totalPrice+optionalBreakfastPrice,
+  const optionalBreakfastPrice = 15 * numNights * numGuests;
 
-  }})
-      }else{
-      checkin({bookingId,breakfast:{}}); }// Викликаємо mutate з updateBooking
-    } else {
+  // Обробка чекіну
+  async function handleCheckin() {
+    if (!confirmPaid) {
       console.log("Please confirm that the payment has been made.");
+      return;
+    }
+
+    // Підготовка даних для оновлення бронювання
+    const breakfastData = addBreakfast
+      ? {
+          hasBreakfast: true,
+          extrasPrice: optionalBreakfastPrice,
+          totalPrice: totalPrice + optionalBreakfastPrice,
+        }
+      : {};
+
+    try {
+      await checkin({
+        bookingId,
+        breakfast: breakfastData,
+      });
+      console.log("Check-in successful");
+    } catch (error) {
+      console.error("Error during check-in:", error);
     }
   }
-
   return (
     <>
       <Row type="horizontal">
@@ -70,14 +85,20 @@ checkin({bookingId,breakfast:{
       </Row>
 
       <BookingDataBox booking={booking} />
-      {!hasBreakfast && <Box>
-        <Checkbox checked={addBreakfest} onChange={() => {
-          setAddBreakfest((add) => !add);
-          setConfirmPaid(false);
-        }} id="breakfast">
-          Want to add Breakfast for {optionalBreakfastPrice}?
-        </Checkbox>
-      </Box>}
+      {!hasBreakfast && (
+        <Box>
+          <Checkbox
+            checked={addBreakfast} // Виправлено на правильну змінну
+            onChange={() => {
+              setAddBreakfast((prev) => !prev); // Виправлено на правильну змінну
+              setConfirmPaid(false);
+            }}
+            id="breakfast"
+          >
+            Want to add Breakfast for {optionalBreakfastPrice}?
+          </Checkbox>
+        </Box>
+      )}
 
       <Box>
         <Checkbox
@@ -87,15 +108,16 @@ checkin({bookingId,breakfast:{
           id="confirm"
         >
           I confirmed that {Guest.fullName} has paid the total amount of{" "}
-          {!addBreakfest ? formatCurrency(totalPrice):`${formatCurrency(totalPrice)+formatCurrency(optionalBreakfastPrice)} (${formatCurrency(totalPrice)}+ ${formatCurrency(optionalBreakfastPrice)})`}
+          {!addBreakfast
+            ? formatCurrency(totalPrice)
+            : `${formatCurrency(totalPrice) + formatCurrency(optionalBreakfastPrice)} (${formatCurrency(
+                totalPrice
+              )} + ${formatCurrency(optionalBreakfastPrice)})`}
         </Checkbox>
       </Box>
 
       <ButtonGroup>
-        <Button
-          onClick={handleCheckin}
-          disabled={!confirmPaid || isCheckingIn}
-        >
+        <Button onClick={handleCheckin} disabled={!confirmPaid || isCheckingIn}>
           Check in booking #{bookingId}
         </Button>
         <Button variation="secondary" onClick={moveBack}>
@@ -107,5 +129,3 @@ checkin({bookingId,breakfast:{
 }
 
 export default CheckinBooking;
-
-

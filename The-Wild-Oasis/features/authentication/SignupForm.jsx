@@ -14,8 +14,9 @@ function SignupForm() {
    const {errors}=formState;
 
    function onSubmit({fullName,email,password}){
+       console.log(fullName,email,password);
        signup({fullName,email,password},{
-           onSettled: ()=>reset
+           onSettled: reset
        })
    }
 
@@ -27,7 +28,7 @@ function SignupForm() {
 
       <FormRow label="Email address" error={errors?.email?.message}>
         <Input type="email" id="email" disabled={isLoading} {...register('email',{required:'This field is required.',pattern:{
-            value: /\S+@\S+\.\S+/,
+            value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                 message: 'Please enter a valid email address'
             }})} />
       </FormRow>

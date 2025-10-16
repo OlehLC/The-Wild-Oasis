@@ -1,12 +1,13 @@
 import styled from "styled-components";
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import {
-    HiOutlineCalendarDays,
-    HiOutlineCog6Tooth,
-    HiOutlineHome,
-    HiOutlineHomeModern,
-    HiOutlineUsers
-} from 'react-icons/hi2'
+  HiOutlineCalendarDays,
+  HiOutlineCog6Tooth,
+  HiOutlineHome,
+  HiOutlineHomeModern,
+  HiOutlineUsers
+} from 'react-icons/hi2';
+import PropTypes from "prop-types";  // Імпортуємо PropTypes
 
 const NavList = styled.ul`
   display: flex;
@@ -20,7 +21,6 @@ const StyledNavLink = styled(NavLink)`
     display: flex;
     align-items: center;
     gap: 1.2rem;
-
     color: var(--color-grey-600);
     font-size: 1.6rem;
     font-weight: 500;
@@ -28,7 +28,6 @@ const StyledNavLink = styled(NavLink)`
     transition: all 0.3s;
   }
 
-  /* This works because react-router places the active class on the active NavLink */
   &:hover,
   &:active,
   &.active:link,
@@ -52,20 +51,41 @@ const StyledNavLink = styled(NavLink)`
     color: var(--color-brand-600);
   }
 `;
-function MainNav() {
-    return(
-        <nav>
-            <NavList>
-                <li>
-                    <StyledNavLink to="/dashboard"><HiOutlineHome/><span>Home</span></StyledNavLink>
-                    <StyledNavLink to="/bookings"><HiOutlineCalendarDays/><span>Bookings</span></StyledNavLink>
-                    <StyledNavLink to="/cabins"><HiOutlineHomeModern/><span>Cabins</span></StyledNavLink>
-                    <StyledNavLink to="/users"><HiOutlineUsers/><span>Users</span></StyledNavLink>
-                     <StyledNavLink to="/settings"><HiOutlineCog6Tooth/><span>Settings</span></StyledNavLink>
-                </li>
-            </NavList>
-        </nav>
-    )
 
+function MainNav({ onLinkClick }) {
+  return (
+    <nav>
+      <NavList>
+        <li>
+          <StyledNavLink to="/dashboard" onClick={onLinkClick}>
+            <HiOutlineHome />
+            <span>Home</span>
+          </StyledNavLink>
+          <StyledNavLink to="/bookings" onClick={onLinkClick}>
+            <HiOutlineCalendarDays />
+            <span>Bookings</span>
+          </StyledNavLink>
+          <StyledNavLink to="/cabins" onClick={onLinkClick}>
+            <HiOutlineHomeModern />
+            <span>Cabins</span>
+          </StyledNavLink>
+          <StyledNavLink to="/users" onClick={onLinkClick}>
+            <HiOutlineUsers />
+            <span>Users</span>
+          </StyledNavLink>
+          <StyledNavLink to="/settings" onClick={onLinkClick}>
+            <HiOutlineCog6Tooth />
+            <span>Settings</span>
+          </StyledNavLink>
+        </li>
+      </NavList>
+    </nav>
+  );
 }
-export default MainNav
+
+// Додаємо перевірку для пропсу onLinkClick
+MainNav.propTypes = {
+  onLinkClick: PropTypes.func.isRequired,
+};
+
+export default MainNav;

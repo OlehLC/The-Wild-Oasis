@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from "styled-components";
 import GlobalStyles from "../styles/GlobalStyles.js";
 import Button from "./Button.jsx";

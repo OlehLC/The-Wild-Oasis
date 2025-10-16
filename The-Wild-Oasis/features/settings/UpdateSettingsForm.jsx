@@ -5,7 +5,7 @@ import {useSettings} from "./useSeetings.js";
 import {useUpdateSetting} from "./useUpdateSetting.js";
 
 function UpdateSettingsForm() {
-    const{isLoading,settings:{
+    const{settings:{
         minBookingLength,
         maxBookingLength,
         maxGuestPerBooking,

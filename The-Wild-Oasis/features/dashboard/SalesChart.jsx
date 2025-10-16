@@ -8,7 +8,7 @@ import { eachDayOfInterval, subDays, isSameDay } from "date-fns"; // Import miss
 import PropTypes from "prop-types"; // Import PropTypes for validation
 
 const StyledSalesChart = styled(DashboardBox)`
-  grid-column: 1 / -1;
+  grid-column: 1 / span 4;
   /* Hack to change grid line colors */
   & .recharts-cartesian-grid-horizontal line,
   & .recharts-cartesian-grid-vertical line {

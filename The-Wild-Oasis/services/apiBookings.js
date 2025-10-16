@@ -91,7 +91,7 @@ export async function getStaysAfterDate(date) {
 export async function getStaysTodayActivity() {
   const { data, error } = await supabase
     .from("Bookings")
-    .select("*, guests(fullName, nationality, countryFlag)")
+    .select("*, Guest(fullName, nationality, countryFlag)")
     .or(
       `and(status.eq.unconfirmed,startDate.eq.${getToday()}),and(status.eq.checked-in,endDate.eq.${getToday()})`
     )
@@ -109,28 +109,36 @@ export async function getStaysTodayActivity() {
 }
 
 export async function updateBooking(id, obj) {
+  // Перевірка, чи є id числом
+  // if (typeof id !== 'number') {
+  //   console.error(`Invalid id type: ${typeof id}. Expected number.`);
+  //   throw new Error("Invalid id type");
+  // }
+
+  // Запит до бази даних Supabase для оновлення бронювання
   const { data, error } = await supabase
     .from("Bookings")
-    .update(obj)
-    .eq("id", id)
-    .select()
-    .single(); // Отримуємо один об'єкт
+    .update(obj)  // Оновлення даних бронювання
+    .eq("id", id)  // Фільтруємо за id
+    .select()  // Оператор select вибирає всі поля
+    .single(); // Оскільки ми очікуємо один об'єкт
 
-  // Якщо є помилка
+  // Перевірка на помилки
   if (error) {
-    console.error(error);
+    console.error('Error during update:', error);
     throw new Error("Booking could not be updated");
   }
 
-  // Якщо дані не знайдено
+  // Якщо дані не знайдені
   if (!data) {
     console.error(`Booking with id ${id} not found.`);
     throw new Error("Booking not found");
   }
 
-  // Повертаємо оновлені дані
+  // Повертаємо оновлені дані бронювання
   return data;
 }
+
 
 
 export async function deleteBooking(id) {
