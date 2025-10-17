@@ -14,7 +14,11 @@ const StyledTodayItem = styled.li`
   font-size: 1.4rem;
   padding: 0.8rem 0;
   border-bottom: 1px solid var(--color-grey-100);
-
+@media (max-width: 570px) {
+   display: flex;
+      flex-direction: column;
+    gap: .4rem;
+  }
   &:first-child {
     border-top: 1px solid var(--color-grey-100);
   }

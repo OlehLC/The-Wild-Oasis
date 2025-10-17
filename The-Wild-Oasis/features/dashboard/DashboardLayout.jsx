@@ -20,7 +20,8 @@ const StyledDashboardLayout = styled.div`
   @media (max-width: 1000px) {
    display: flex;
       flex-direction: column;
-    gap: 2.4rem;
+    gap: 1.4rem;
+      margin: 4rem auto;
   }
 `;
 

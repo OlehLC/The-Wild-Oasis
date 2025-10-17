@@ -11,6 +11,9 @@ const Main = styled.main`
   padding: 4rem 4.8rem 6.4rem;
   scroll-behavior: smooth;
   overflow: scroll;
+    @media (max-width: 600px) {
+   padding: 4rem 1.8rem 6.4rem;
+  }
 `;
 
 const StyledAppLayout = styled.div`
