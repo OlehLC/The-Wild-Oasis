@@ -15,6 +15,10 @@ const StyledModal = styled.div`
   box-shadow: var(--shadow-lg);
   padding: 3.2rem 4rem;
   transition: all 0.5s;
+  @media (max-width: 900px) {
+   width: 80%; 
+  }
+  
 `;
 
 const Overlay = styled.div`
@@ -34,7 +38,7 @@ const Button = styled.button`
   border: none;
   padding: 0.4rem;
   border-radius: var(--border-radius-sm);
-  transform: translateX(0.8rem);
+  transform: translateX(.8rem);
   transition: all 0.2s;
   position: absolute;
   top: 1.2rem;
