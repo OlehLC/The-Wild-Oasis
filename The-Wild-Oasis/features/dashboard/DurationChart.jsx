@@ -9,7 +9,7 @@ const ChartBox = styled.div`
   border: 1px solid var(--color-grey-100);
   border-radius: var(--border-radius-md);
   padding: 2.4rem 3.2rem;
-  grid-column: 3 / span 2;
+  grid-column: 2 / span 3;
  @media (max-width: 770px) {
    padding: 2.4rem 1.2rem;
   }

@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+  import { useMutation } from "@tanstack/react-query";
 import { updateBooking } from "../../services/apiBookings.js";
 import { toast } from "react-hot-toast";
 import { useQueryClient } from "@tanstack/react-query";
@@ -11,7 +11,7 @@ export function useCheckin() {
   // Переконайтесь, що ви використовуєте mutate правильно
   const { mutate: checkin, isLoading: isCheckingIn } = useMutation({
     mutationFn: (bookingId,breakfast) =>
-      updateBooking({bookingId}, {
+      updateBooking(bookingId, {
         status: "checked-in",
         isPaid: true,
         ...breakfast,

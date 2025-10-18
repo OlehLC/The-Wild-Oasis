@@ -68,10 +68,7 @@ function CheckinBooking() {
       : {};
 
     try {
-      await checkin({
-        bookingId,
-        breakfast: breakfastData,
-      });
+      await checkin( bookingId,breakfastData );
       console.log("Check-in successful");
     } catch (error) {
       console.error("Error during check-in:", error);
